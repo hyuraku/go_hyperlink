@@ -12,11 +12,11 @@ func main() {
 	flag.Parse()
 	url := flag.Arg(0)
 	if url == "" {
-		fmt.Println("write the url")
+		panic("write the url")
 	}
 	resp, err := http.Get(url)
   if err != nil {
-		fmt.Println("check the url you write")
+		panic("check the url you write")
 	}
 	defer resp.Body.Close()
 
