@@ -25,6 +25,7 @@ func main() {
 	re := regexp.MustCompile("<title>(.*)</title>")
 	title := re.FindStringSubmatch(responseBody)[1]
 
-	str := fmt.Sprintf("markdown: [%s](%s)", title, url)
-  fmt.Println(str) 
+	html := fmt.Sprintf("html: <a href='%s'>%s</a>\n", url, title)
+	markdown := fmt.Sprintf("markdown: [%s](%s)", title, url)
+	fmt.Println(html + markdown) 
 }
