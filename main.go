@@ -30,6 +30,6 @@ func main() {
 	results := hyperlink.Hyperlink(url, title)
 
 	for key, value := range results {
-    fmt.Println(key, value)
+		fmt.Println(key, value)
 	}
 }
