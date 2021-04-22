@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"io/ioutil"
 	"regexp"
+
+	"example.com/hyperlink"
 )
 
 func main() {
@@ -25,7 +27,9 @@ func main() {
 	re := regexp.MustCompile("<title>(.*)</title>")
 	title := re.FindStringSubmatch(responseBody)[1]
 
-	html := fmt.Sprintf("html: <a href='%s'>%s</a>\n", url, title)
-	markdown := fmt.Sprintf("markdown: [%s](%s)", title, url)
-	fmt.Println(html + markdown) 
+	results := hyperlink.Hyperlink(url, title)
+
+	for key, value := range results {
+		fmt.Println(key, value)
+	}
 }
