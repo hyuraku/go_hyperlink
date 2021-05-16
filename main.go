@@ -21,12 +21,12 @@ func main() {
 		panic("write the url")
 	}
 	resp, err := http.Get(url)
-  if err != nil {
+	if err != nil {
 		panic("check the url you write")
 	}
 	defer resp.Body.Close()
 
-  byteArray, _ := ioutil.ReadAll(resp.Body)
+	byteArray, _ := ioutil.ReadAll(resp.Body)
 
 	det := chardet.NewTextDetector()
 	detRslt, _ := det.DetectBest(byteArray)
