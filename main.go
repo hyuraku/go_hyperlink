@@ -1,11 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"flag"
 	"net/http"
 	"io/ioutil"
-	"regexp"
+
+	"github.com/PuerkitoBio/goquery"
+	"github.com/saintfish/chardet"
+	"golang.org/x/net/html/charset"
 
 	"example.com/hyperlink"
 )
@@ -23,13 +27,20 @@ func main() {
 	defer resp.Body.Close()
 
   byteArray, _ := ioutil.ReadAll(resp.Body)
-	responseBody := string(byteArray)
-	re := regexp.MustCompile("<title>(.*)</title>")
-	title := re.FindStringSubmatch(responseBody)[1]
+
+	det := chardet.NewTextDetector()
+	detRslt, _ := det.DetectBest(byteArray)
+
+	bReader := bytes.NewReader(byteArray)
+	reader, _ := charset.NewReaderLabel(detRslt.Charset, bReader)
+
+	doc, _ := goquery.NewDocumentFromReader(reader)
+
+	title := doc.Find("title").Text()
 
 	results := hyperlink.Hyperlink(url, title)
 
-	for key, value := range results {
-		fmt.Println(key, value)
+	for _, value := range results {
+		fmt.Println(value)
 	}
 }
