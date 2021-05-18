@@ -40,7 +40,8 @@ func main() {
 
 	results := hyperlink.Hyperlink(url, title)
 
-	for _, value := range results {
-		fmt.Println(value)
+	for _, format := range results {
+		msg := fmt.Sprintf("%s: %s", format.Name, format.Url)
+		fmt.Println(msg)
 	}
 }
